@@ -22,12 +22,10 @@ var red = color.New(color.FgRed).SprintFunc()
 var yellow = color.New(color.FgYellow).SprintFunc()
 var green = color.New(color.FgHiGreen).SprintFunc()
 
-var SBName string
-
-func init(){
-	if len(os.Args) != 2{
+func init() {
+	if len(os.Args) != 2 {
 		log.Error("Need to provide 1 argument: SBName (from .env file)")
-		time.Sleep(5*time.Second)
+		time.Sleep(5 * time.Second)
 		os.Exit(1)
 	}
 	sbName := os.Args[1]
@@ -39,17 +37,15 @@ func init(){
 	}
 }
 
-
-func main(){
+func main() {
 	tm.Clear()
 	for {
 		data := getData()
 		tm.MoveCursor(1, 1)
 		buildScreen(data)
-		time.Sleep(5*time.Second)
+		time.Sleep(5 * time.Second)
 		tm.Flush()
 	}
-
 
 }
 
@@ -69,7 +65,7 @@ func getData() [][]string {
 		for _, sub := range subs {
 			topicName := topic.Name
 			var subName string
-			if sub.Name == "azurefunction1"{
+			if sub.Name == "azurefunction1" {
 				subName = red(sub.Name)
 			} else {
 				subName = sub.Name
@@ -91,7 +87,7 @@ func getData() [][]string {
 	return data
 }
 
-func getSubs(topicName string)([]*servicebus.SubscriptionEntity, error){
+func getSubs(topicName string) ([]*servicebus.SubscriptionEntity, error) {
 	sm, err := sb.NewSubscriptionManager(topicName)
 	if err != nil {
 		log.Error("Error getting sub manager:", err)
@@ -100,15 +96,14 @@ func getSubs(topicName string)([]*servicebus.SubscriptionEntity, error){
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 	subs, err := sm.List(ctx)
-	if err != nil{
+	if err != nil {
 		log.Error("Error getting subs: ", err)
 		return nil, err
 	}
 	return subs, nil
 }
 
-
-func getTopics() ([]*servicebus.TopicEntity, error){
+func getTopics() ([]*servicebus.TopicEntity, error) {
 	top := sb.NewTopicManager()
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
@@ -119,7 +114,6 @@ func getTopics() ([]*servicebus.TopicEntity, error){
 	}
 	return topics, nil
 }
-
 
 func buildScreen(data [][]string) {
 	printAll := ""
@@ -138,7 +132,7 @@ func buildScreen(data [][]string) {
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetHeader([]string{"Topic", "Sub", "Count"})
 	table.SetAutoMergeCells(true)
-	for _, v := range data{
+	for _, v := range data {
 		table.Append(v)
 	}
 	fmt.Print(printAll)
