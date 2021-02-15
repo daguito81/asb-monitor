@@ -8,7 +8,7 @@ require (
 	github.com/Azure/go-autorest/autorest v0.11.17 // indirect
 	github.com/Azure/go-autorest/autorest/adal v0.9.11 // indirect
 	github.com/buger/goterm v0.0.0-20200322175922-2f3e71b85129
-	github.com/daguito81/sbmgmt v0.1.0
+	github.com/daguito81/sbmgmt v0.1.2
 	github.com/fatih/color v1.10.0
 	github.com/klauspost/compress v1.11.7 // indirect
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
